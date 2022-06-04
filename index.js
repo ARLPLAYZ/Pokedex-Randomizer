@@ -1,30 +1,11 @@
 const { Client, Intents, Message, MessageEmbed, Collection } = require('discord.js');
-const fetch = require('node-fetch');
+
 const client = new Client({partials: ["CHANNEL"], intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES]});
-const mons = require('./mons.json');
+
 const Pokedex = require('pokedex-promise-v2');
 const P = new Pokedex();
 const weaknesses = require('./weaknesses');
-const color = {
-    normal: 0x9B9B6B,
-    fire: 0xE5711E,
-    water: 0x4C7BED,
-    electric: 0xF2C617,
-    grass: 0x69B741,
-    ice: 0x7FCECE,
-    fighting: 0xAF2C25,
-    poison: 0x8E398E,
-    ground: 0xD9B34A,
-    flying: 0x9C88DA,
-    psychic: 0xF7356F,
-    bug: 0x9BA91E,
-    rock: 0xA48F32,
-    ghost: 0x634E86,
-    dragon: 0x6124F5,
-    dark: 0x5E493C,
-    style: 0xA6A6C4,
-    fairy: 0xE484E4,
-};
+
 client.commands = new Collection();
 client.on('debug',i=>console.warn(i));
 client.on('ready', ()=> {
