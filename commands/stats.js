@@ -33,16 +33,18 @@ module.exports = {
         }
         try {
             const res = await P.getPokemonByName(pokemon);    
+                      const total = res.stats.map(r=>parseInt(r.base_stat));
+            const totalSum = total.reduce((partialSum, a) => partialSum + a, 0);
             const imageName = args[0].toLowerCase().replace(/[\s&\/\\#,+()$~%.'":*?<>{}]/g, '');
-      const imageURL = 'https://play.pokemonshowdown.com/sprites/ani-shiny/' +imageName + '.gif'       
+      const imageURL = 'https://play.pokemonshowdown.com/sprites/ani/' +imageName + '.gif'       
             const embed = new MessageEmbed()
                 .setColor(color[res.types[0].type.name])
-                .setTitle(args[0])
-                .setImage(imageURL||res.sprites.front_default);
+                .setTitle(args[0] + ': ' + totalSum)
+                               .setDescription(res.stats.map(r=> `**${r.stat.name}:** \`${r.base_stat}\``).join('\n'))
+ .setImage(imageURL||res.sprites.front_default);
             return msg.channel.send({ embeds: [embed]});
         } catch (err) {
-            console.log(err);
-            return msg.reply('I made an oopsie on my side :(. This error has been reported');
+            return msg.reply('Pokemon doesnt exist :/');
         }     
     }
 }
